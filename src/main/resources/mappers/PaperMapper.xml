@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.PaperMapper">
+    <resultMap id="paperMap" type="edu.hstc.bean.Paper">
+        <result property="p_id" column="p_id"/>
+        <result property="p_title" column="p_title"/>
+        <result property="p_desc" column="p_desc"/>
+        <result property="co_id" column="co_id"/>
+        <result property="createdBy" column="createdBy"/>
+        <result property="createdTime" column="createdTime"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
+        <result property="resultCount" column="resultCount"/>
+        <result property="isRelease" column="isRelease"/>
+        <result property="DXscore" column="Dxscore"/>
+
+
+        <association property="course" javaType="edu.hstc.bean.Course">
+            <result property="co_id" column="co_id"/>
+            <result property="c_name" column="c_name"/>
+            <result property="c_desc" column="c_desc"/>
+        </association>
+
+        <collection property="subjectList" javaType="list" ofType="edu.hstc.bean.Subject">
+            <result property="sj_id" column="sj_id"/>
+            <result property="s_code" column="s_code"/>
+            <result property="s_name" column="s_name"/>
+            <result property="s_type" column="s_type"/>
+            <result property="s_score" column="s_score"/>
+            <result property="s_picPath" column="s_picPath"/>
+            <result property="p_id" column="p_id"/>
+
+            <collection property="optionList" javaType="list" ofType="edu.hstc.bean.Option">
+                <result property="o_id" column="o_id"/>
+                <result property="o_name" column="o_name"/>
+                <result property="o_isTrue" column="o_isTrue"/>
+                <result property="o_picPath" column="o_picPath"/>
+                <result property="sj_id" column="sj_id"/>
+            </collection>
+        </collection>
+        <collection property="resultList" javaType="list" ofType="edu.hstc.bean.Result">
+            <result property="re_id" column="re_id"/>
+            <result property="result" column="result"/>
+            <result property="r_score" column="r_score"/>
+            <result property="p_id" column="p_id"/>
+            <result property="u_id" column="u_id"/>
+            <result property="sj_id" column="sj_id"/>
+        </collection>
+    </resultMap>
+    
+    <select id="selectPaperByCId" parameterType="Integer" resultType="edu.hstc.bean.Paper">
+        select * from exam_course c,exam_paper p where c.co_id = p.co_id and p.co_id=#{co_id}
+    </select>
+
+    <select id="selectPaperById" parameterType="map" resultMap="paperMap">
+        select * from exam_course c,exam_paper p LEFT JOIN exam_subject s ON p.p_id = s.p_id LEFT JOIN exam_option o ON s.sj_id = o.sj_id where
+         p.p_id = #{p_id} AND c.co_id = p.co_id order by s.s_code ASC,o.o_id ASC
+    </select>
+
+    <select id="selectPaperAndResult" parameterType="map" resultMap="paperMap">
+        select * from exam_course c,exam_paper p LEFT JOIN exam_result r ON p.p_id = r.p_id and r.u_id=#{u_id} where
+         c.co_id = p.co_id and p.co_id=#{co_id} and p.isRelease=1
+    </select>
+
+    <select id="selectPaperByTitle" parameterType="map" resultType="edu.hstc.bean.Paper">
+        select * from exam_paper p ,exam_course c where c.co_id = p.co_id and p.co_id=#{co_id} and p.p_title like concat('%',#{title},'%')
+    </select>
+
+    <insert id="newPaper" parameterType="edu.hstc.bean.Paper" useGeneratedKeys="true" keyProperty="p_id" keyColumn="p_id">
+        insert into exam_paper (p_title,co_id,createdBy) values (#{p_title},#{co_id},#{createdBy})
+    </insert>
+
+    <update id="updatePaper" parameterType="edu.hstc.bean.Paper">
+        update exam_paper
+        <set>
+            <if test="p_title!=null and p_title!=''">
+                p_title=#{p_title},
+            </if>
+            <if test="p_desc!=null and p_desc!=''">
+                p_desc=#{p_desc},
+            </if>
+            <if test="resultCount!=null and resultCount!=''">
+                resultCount=#{resultCount},
+            </if>
+        </set>
+        where p_id=#{p_id}
+    </update>
+
+    <update id="updatePaperSetting" parameterType="edu.hstc.bean.Paper">
+        update exam_paper set startTime=#{startTime},endTime=#{endTime},DXscore=#{DXscore},isRelease=#{isRelease} where p_id=#{p_id}
+    </update>
+
+    <delete id="deletePaper" parameterType="Integer">
+        delete from exam_paper where p_id=#{p_id}
+    </delete>
+
+</mapper>

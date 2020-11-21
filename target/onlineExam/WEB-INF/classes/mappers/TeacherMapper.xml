@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.TeacherMapper">
+    <resultMap id="teacherMap" type="edu.hstc.bean.Teacher">
+        <result property="t_id" column="t_id"/>
+        <result property="t_code" column="t_code"/>
+        <result property="t_userName" column="t_userName"/>
+        <result property="t_password" column="t_password"/>
+        <result property="t_userRole" column="t_userRole"/>
+        <result property="t_picPath" column="t_picPath"/>
+
+        <association property="role" javaType="edu.hstc.bean.UserRole">
+            <result property="r_id" column="r_id"/>
+            <result property="roleCode" column="roleCode"/>
+            <result property="roleName" column="roleName"/>
+        </association>
+
+    </resultMap>
+
+    <select id="selectTeacherByCP" resultMap="teacherMap" parameterType="map">
+        select * from exam_teacher t,exam_role r where
+        t_code=#{userCode} and t_password=#{password} and t.t_userRole=#{userRole} and t.t_userRole = r.r_id
+    </select>
+
+    <select id="selectAllTeacher" resultMap="teacherMap">
+        select * from exam_teacher t,exam_role r where t.t_userRole = r.r_id
+    </select>
+
+</mapper>

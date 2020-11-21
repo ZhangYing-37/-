@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.ScoreMapper">
+    <resultMap id="scoreMap" type="edu.hstc.bean.Score">
+        <result column="sc_id" property="sc_id"/>
+        <result column="DX_score" property="DX_score"/>
+        <result column="DX1_score" property="DX1_score"/>
+        <result column="PD_score" property="PD_score"/>
+        <result column="TK_score" property="TK_score"/>
+        <result column="JD_score" property="JD_score"/>
+        <result column="totalScore" property="totalScore"/>
+        <result column="isCorrect" property="isCorrect"/>
+        <result column="p_id" property="p_id"/>
+        <result column="u_id" property="u_id"/>
+        <association property="paper" javaType="edu.hstc.bean.Paper">
+            <result property="p_id" column="p_id"/>
+            <result property="p_title" column="p_title"/>
+            <result property="p_desc" column="p_desc"/>
+        </association>
+        <association property="user" javaType="edu.hstc.bean.User">
+            <result property="u_id" column="u_id"/>
+            <result property="u_code" column="u_code"/>
+            <result property="u_userName" column="u_userName"/>
+            <result property="u_realName" column="u_realName"/>
+        </association>
+    </resultMap>
+    
+    <select id="selectScoreByPid" parameterType="Integer" resultMap="scoreMap">
+        select * from exam_score sc,exam_paper p,exam_user u where sc.p_id = p.p_id and sc.u_id = u.u_id 
+        and sc.p_id=#{p_id};
+    </select>
+
+    <select id="selectScoreByLayui" parameterType="map" resultMap="scoreMap">
+        select * from exam_score sc,exam_paper p,exam_user u where sc.p_id = p.p_id and sc.u_id = u.u_id
+        and sc.p_id=#{p_id} limit #{page},#{limit};
+    </select>
+    
+    <insert id="insertScore" parameterType="edu.hstc.bean.Score">
+        insert into exam_score (DX_score,DX1_score,PD_score,TK_score,JD_score,totalScore,isCorrect,p_id,u_id)
+        values (#{DX_score},#{DX1_score},#{PD_score},#{TK_score},#{JD_score},#{totalScore},#{isCorrect},#{p_id},#{u_id});
+    </insert>
+    
+    <update id="updateScore" parameterType="edu.hstc.bean.Score">
+        update exam_score set DX_score=#{DX_score},DX1_score=#{DX1_score},PD_score=#{PD_score},TK_score=#{TK_score},
+        JD_score=#{JD_score},totalScore=#{totalScore},isCorrect=#{isCorrect} where p_id=#{p_id} and u_id=#{u_id};
+    </update>
+
+</mapper>

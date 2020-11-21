@@ -1,0 +1,30 @@
+.paperSO{
+	left: 7%;
+	margin-top: 1px;
+}
+
+#paperContent{
+	width: 920px;
+	padding-top: 0;
+	margin: 5% auto;
+	background-color: white;
+}
+
+.survey{
+	width: 780px;
+	line-height: 20px;
+	word-wrap: break-word;
+	padding: 0;
+	margin: 0 auto;
+}
+
+.surveyHead{
+	line-height: 20px;
+	text-align: center;
+	width: 96%;
+	padding: 40px 2% 30px;
+}
+
+.surveySubjectHead{
+	font-weight: bold;
+}

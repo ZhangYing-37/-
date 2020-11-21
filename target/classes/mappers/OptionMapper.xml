@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.OptionMapper">
+    <insert id="insertOption" parameterType="edu.hstc.bean.Option" keyColumn="o_id" keyProperty="o_id" useGeneratedKeys="true">
+        insert into exam_option (o_name,o_isTrue,sj_id) values (#{o_name},#{o_isTrue},#{sj_id});
+    </insert>
+
+    <update id="updateOption" parameterType="edu.hstc.bean.Option">
+        update exam_option set o_name=#{o_name},o_isTrue=#{o_isTrue} where o_id=#{o_id};
+    </update>
+
+    <delete id="deleteOption" parameterType="edu.hstc.bean.Option">
+        delete from exam_option where o_id=#{o_id}
+    </delete>
+</mapper>

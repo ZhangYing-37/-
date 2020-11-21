@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.ResultMapper">
+    <resultMap id="resultSubjectMap" type="edu.hstc.bean.Result">
+        <result column="re_id" property="re_id"/>
+        <result column="result" property="result"/>
+        <result column="r_score" property="r_score"/>
+        <result column="sj_id" property="sj_id"/>
+        <result column="p_id" property="p_id"/>
+        <result column="u_id" property="u_id"/>
+
+        <association property="subject" javaType="edu.hstc.bean.Subject">
+            <result property="sj_id" column="sj_id"/>
+            <result property="s_code" column="s_code"/>
+            <result property="s_name" column="s_name"/>
+            <result property="s_type" column="s_type"/>
+            <result property="s_score" column="s_score"/>
+            <result property="s_picPath" column="s_picPath"/>
+            <result property="p_id" column="p_id"/>
+        </association>
+
+    </resultMap>
+    <select id="selectResultByUidAndPid" parameterType="edu.hstc.bean.Result" resultMap="resultSubjectMap">
+        select * from exam_result r,exam_subject s where r.sj_id=s.sj_id and r.u_id=#{u_id} and r.p_id=#{p_id} order by s.s_code ASC
+    </select>
+
+    <insert id="insertResult" parameterType="edu.hstc.bean.Result">
+        insert into exam_result (result,r_score,p_id,sj_id,u_id) values (#{result},#{r_score},#{p_id},#{sj_id},#{u_id})
+    </insert>
+</mapper>

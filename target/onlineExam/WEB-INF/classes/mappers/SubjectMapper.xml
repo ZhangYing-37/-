@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.SubjectMapper">
+    <resultMap id="subjectMap" type="edu.hstc.bean.Subject">
+        <result property="sj_id" column="sj_id"/>
+        <result property="s_code" column="s_code"/>
+        <result property="s_name" column="s_name"/>
+        <result property="s_type" column="s_type"/>
+        <result property="s_score" column="s_score"/>
+        <result property="s_picPath" column="s_picPath"/>
+        <result property="p_id" column="p_id"/>
+
+        <collection property="optionList" javaType="list" ofType="edu.hstc.bean.Option">
+            <result property="o_id" column="o_id"/>
+            <result property="o_name" column="o_name"/>
+            <result property="o_isTrue" column="o_isTrue"/>
+            <result property="o_picPath" column="o_picPath"/>
+            <result property="sj_id" column="sj_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectSO" parameterType="map" resultMap="subjectMap">
+        select * from exam_subject s LEFT JOIN exam_option o ON s.sj_id = o.sj_id where s.sj_id = #{sj_id}
+    </select>
+
+    <select id="selectTypeById" parameterType="Integer" resultType="Integer">
+        select s_type from exam_subject where sj_id=#{sj_id}
+    </select>
+    
+    <insert id="insertSubject" parameterType="edu.hstc.bean.Subject" useGeneratedKeys="true" keyProperty="sj_id" keyColumn="sj_id">
+        insert into exam_subject (s_code,s_name,s_type,s_score,p_id) values (#{s_code},#{s_name},#{s_type},#{s_score},#{p_id});
+    </insert>
+
+    <update id="updateSubject" parameterType="edu.hstc.bean.Subject">
+        update exam_subject
+        <set>
+            <if test="s_code!=null and s_code!=''">
+                s_code=#{s_code},
+            </if>
+            <if test="s_name!=null and s_name!=''">
+                s_name=#{s_name},
+            </if>
+            <if test="s_type!=null and s_type!=''">
+                s_type=#{s_type},
+            </if>
+            <if test="s_score!=null and s_score!=''">
+                s_score=#{s_score},
+            </if>
+        </set>
+        where sj_id=#{sj_id}
+    </update>
+
+    <delete id="deleteSubject" parameterType="Integer">
+        delete from exam_subject where sj_id = #{sj_id}
+    </delete>
+</mapper>

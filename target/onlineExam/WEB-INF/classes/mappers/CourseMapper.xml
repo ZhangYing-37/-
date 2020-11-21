@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.CourseMapper">
+    <select id="selectCourseByTid" parameterType="Integer" resultType="edu.hstc.bean.Course">
+        select * from exam_course co,exam_tcu tcu where tcu.t_id=#{t_id} and tcu.co_id = co.co_id
+    </select>
+
+    <select id="selectCourseByCid" parameterType="Integer" resultType="edu.hstc.bean.Course">
+        select * from exam_course co,exam_tcu tcu where tcu.c_id=#{c_id} and tcu.co_id = co.co_id
+    </select>
+
+    <select id="selectCourseByCoid" parameterType="Integer" resultType="edu.hstc.bean.Course">
+        select * from exam_course where co_id=#{co_id}
+    </select>
+</mapper>

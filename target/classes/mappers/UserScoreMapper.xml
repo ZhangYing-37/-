@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.UserScoreMapper">
+    <resultMap id="userScoreMap" type="edu.hstc.bean.UserScore">
+        <result column="us_id" property="us_id"/>
+        <result column="score" property="score"/>
+        <result column="sj_id" property="sj_id"/>
+        <result column="p_id" property="p_id"/>
+        <result column="u_id" property="u_id"/>
+        <!--<association property="paper" javaType="edu.hstc.bean.Paper">
+            <result property="p_id" column="p_id"/>
+            <result property="p_title" column="p_title"/>
+            <result property="p_desc" column="p_desc"/>
+            <result property="co_id" column="co_id"/>
+            <result property="createdBy" column="createdBy"/>
+            <result property="createdTime" column="createdTime"/>
+            <result property="startTime" column="startTime"/>
+            <result property="endTime" column="endTime"/>
+            <result property="resultCount" column="resultCount"/>
+            <result property="isRelease" column="isRelease"/>
+            <result property="DXscore" column="Dxscore"/>
+
+            <collection property="subjectList" javaType="list" ofType="edu.hstc.bean.Subject">
+                <result property="sj_id" column="sj_id"/>
+                <result property="s_code" column="s_code"/>
+                <result property="s_name" column="s_name"/>
+                <result property="s_type" column="s_type"/>
+                <result property="s_score" column="s_score"/>
+                <result property="s_picPath" column="s_picPath"/>
+                <result property="p_id" column="p_id"/>
+            </collection>
+        </association>-->
+    </resultMap>
+    <select id="selectScoreByPU" parameterType="edu.hstc.bean.UserScore" resultMap="userScoreMap">
+        select * from exam_userScore where p_id=#{p_id} and u_id=#{u_id} order by us_id ASC
+    </select>
+    
+    <insert id="insertScore" parameterType="edu.hstc.bean.UserScore">
+        insert into exam_userScore (score,sj_id,p_id,u_id) values (#{score},#{sj_id},#{p_id},#{u_id});
+    </insert>
+
+    <update id="updateScore" parameterType="edu.hstc.bean.UserScore">
+        update exam_userScore set score=#{score} where us_id=#{us_id};
+    </update>
+</mapper>

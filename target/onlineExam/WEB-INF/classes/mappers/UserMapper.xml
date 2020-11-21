@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hstc.mapper.UserMapper">
+    <resultMap id="userMap" type="edu.hstc.bean.User">
+        <result property="u_id" column="u_id"/>
+        <result property="u_code" column="u_code"/>
+        <result property="u_userName" column="u_userName"/>
+        <result property="u_password" column="u_password"/>
+        <result property="u_userRole" column="u_userRole"/>
+        <result property="u_realName" column="u_realName"/>
+        <result property="u_sex" column="u_sex"/>
+        <result property="u_email" column="u_email"/>
+        <result property="u_phone" column="u_phone"/>
+        <result property="c_id" column="c_id"/>
+        <result property="u_picPath" column="u_picPath"/>
+
+        <association property="role" javaType="edu.hstc.bean.UserRole">
+            <result property="r_id" column="r_id"/>
+            <result property="roleCode" column="roleCode"/>
+            <result property="roleName" column="roleName"/>
+        </association>
+
+        <association property="classes" javaType="edu.hstc.bean.Classes">
+            <result property="c_id" column="c_id"/>
+            <result property="c_code" column="c_code"/>
+            <result property="c_grade" column="c_grade"/>
+            <result property="c_name" column="c_name"/>
+        </association>
+
+
+    </resultMap>
+
+    <select id="selectUserByCP" resultMap="userMap" parameterType="map">
+        select * from exam_user u,exam_role r,exam_classes c where
+        u_code=#{userCode} and u_password=#{password} and u.u_userRole=#{userRole} and u.u_userRole = r.r_id and c.c_id=u.c_id
+    </select>
+
+    <select id="selectAllUser" resultMap="userMap">
+        select * from exam_user u,exam_role r where u.u_userRole = r.r_id and c.c_id=u.c_id
+    </select>
+
+    <select id="selectUserById" resultType="edu.hstc.bean.User" parameterType="Integer">
+        select * from exam_user where u_id=#{u_id}
+    </select>
+
+</mapper>
