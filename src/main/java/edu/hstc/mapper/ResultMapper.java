@@ -11,6 +11,8 @@ public interface ResultMapper {
     //通过试卷及用户id查询结果
     public List<Result> selectResultByUidAndPid(Result result);
 
+    public List<Result> selectResultByOid(Integer o_id);
+
     //插入试卷结果
     public Integer insertResult(Result result);
 }

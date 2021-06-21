@@ -36,16 +36,20 @@ public class PaperController {
 
     @RequestMapping("/newPaper")
     public String newPaper(String t_title, Integer co_id, HttpSession session){
-        Teacher teacher = (Teacher) session.getAttribute("loginUser");
+        Teacher teacher = (Teacher) session.getAttribute("loginTeacher");
         Integer p_id = paperService.newPaper(t_title,co_id,teacher.getT_id());
         Paper paper = paperService.getPaperById(p_id);
         session.setAttribute("totalScore",0);
         session.setAttribute("thisPaper",paper);
-        return "paperEdit";
+        return "redirect:toEditPaper";
     }
 
     @RequestMapping("/toEditPaper")
     public String toEditPaper(Integer p_id, HttpSession session){
+        if (p_id==null||p_id==0){
+            Paper paper= (Paper) session.getAttribute("thisPaper");
+            p_id=paper.getP_id();
+        }
         Paper paper = paperService.getPaperById(p_id);
         /*if (paper.getSubjectList().size()>0){
             paper.setSubjectList(paperService.subjectListSort(paper.getSubjectList()));

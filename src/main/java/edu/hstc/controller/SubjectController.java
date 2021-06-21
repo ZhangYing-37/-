@@ -1,10 +1,14 @@
 package edu.hstc.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import edu.hstc.bean.Option;
 import edu.hstc.bean.Paper;
 import edu.hstc.bean.Subject;
+import edu.hstc.bean.Tcu;
 import edu.hstc.service.OptionService;
 import edu.hstc.service.PaperService;
+import edu.hstc.service.ResultService;
 import edu.hstc.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -20,12 +26,47 @@ public class SubjectController {
 
     @Autowired
     PaperService paperService;
-
     @Autowired
     SubjectService subjectService;
-
     @Autowired
     OptionService optionService;
+    @Autowired
+    ResultService resultService;
+
+    @RequestMapping("/toSubjectAnalysis")
+    public String toSubjectAnalysis(HttpSession session){
+        Paper paper = (Paper) session.getAttribute("thisPaper");
+        for (int i=0;i<paper.getSubjectList().size();i++){
+            for (int j=0;j<paper.getSubjectList().get(i).getOptionList().size();j++){
+                Option option = paper.getSubjectList().get(i).getOptionList().get(j);
+                int count = resultService.getResultCount(option.getO_id());
+                optionService.updateOption(option.getO_name(),option.getO_isTrue(),count,option.getO_id());
+            }
+        }
+        paper = paperService.getPaperById(paper.getP_id());
+        session.setAttribute("thisPaper",paper);
+        return "paperAnalysis";
+    }
+
+    @RequestMapping("selectSubject")
+    @ResponseBody
+    public String selectSubject(Integer sj_id){
+        Subject subject = subjectService.getSubject(sj_id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",subject.getOptionList().size());
+        JSONArray jsonArray = new JSONArray();
+        for (int i=0;i<subject.getOptionList().size();i++){
+            if (subject.getOptionList().get(i).getO_isTrue()==1){
+                subject.getOptionList().get(i).setO_name(subject.getOptionList().get(i).getO_name()+"(正确答案)");
+            }
+            jsonArray.add(subject.getOptionList().get(i));
+        }
+        map.put("data",jsonArray);
+        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(map);
+        return jsonObject.toJSONString();
+    }
 
     @RequestMapping("/updateSubjectDX1")
     @ResponseBody
@@ -92,9 +133,9 @@ public class SubjectController {
                 o_name = (String) map.get(mapKeyCopy);
 
                 if (j==trueId){
-                    optionService.updateOption(o_name,1,option.getO_id());
+                    optionService.updateOption(o_name,1,0,option.getO_id());
                 }else {
-                    optionService.updateOption(o_name,2,option.getO_id());
+                    optionService.updateOption(o_name,2,0,option.getO_id());
                 }
 
             }
@@ -196,7 +237,7 @@ public class SubjectController {
                 }else {
                     o_isTrue = 2;
                 }
-                optionService.updateOption(o_name,o_isTrue,option.getO_id());
+                optionService.updateOption(o_name,o_isTrue,0,option.getO_id());
             }
             if (difference>0){
                 for (int j=size;j<subject.getOptionList().size();j++){
@@ -222,7 +263,6 @@ public class SubjectController {
 
         }
     }
-
 
 
     @RequestMapping("/updateSubjectPD")
@@ -290,9 +330,9 @@ public class SubjectController {
                 o_name = (String) map.get(mapKeyCopy);
 
                 if (j==trueId){
-                    optionService.updateOption(o_name,1,option.getO_id());
+                    optionService.updateOption(o_name,1,0,option.getO_id());
                 }else {
-                    optionService.updateOption(o_name,2,option.getO_id());
+                    optionService.updateOption(o_name,2,0,option.getO_id());
                 }
 
             }
@@ -333,7 +373,7 @@ public class SubjectController {
             subject.setS_type(s_type);
             subject.setS_score(s_score);
             subjectService.updateSubject(subject);
-            optionService.updateOption(o_name,1,subject.getOptionList().get(0).getO_id());
+            optionService.updateOption(o_name,1,0,subject.getOptionList().get(0).getO_id());
             return "updateSubjectTK success";
         }
     }

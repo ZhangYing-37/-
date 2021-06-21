@@ -15,4 +15,16 @@
     <select id="selectCourseByCoid" parameterType="Integer" resultType="edu.hstc.bean.Course">
         select * from exam_course where co_id=#{co_id}
     </select>
+
+    <insert id="insertCourse" parameterType="edu.hstc.bean.Course" useGeneratedKeys="true" keyProperty="co_id" keyColumn="co_id">
+        insert into exam_course (co_name,c_desc) values (#{co_name},#{c_desc});
+    </insert>
+
+    <update id="updateCourse" parameterType="edu.hstc.bean.Course">
+        update exam_course set co_name=#{co_name},c_desc=#{c_desc} where co_id=#{co_id};
+    </update>
+
+    <delete id="deleteCourse" parameterType="Integer">
+        delete from exam_course where co_id=#{co_id}
+    </delete>
 </mapper>

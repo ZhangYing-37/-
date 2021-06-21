@@ -27,6 +27,10 @@
         select * from exam_result r,exam_subject s where r.sj_id=s.sj_id and r.u_id=#{u_id} and r.p_id=#{p_id} order by s.s_code ASC
     </select>
 
+    <select id="selectResultByOid" parameterType="Integer" resultType="edu.hstc.bean.Result">
+        select * from exam_result where result=#{o_id}
+    </select>
+
     <insert id="insertResult" parameterType="edu.hstc.bean.Result">
         insert into exam_result (result,r_score,p_id,sj_id,u_id) values (#{result},#{r_score},#{p_id},#{sj_id},#{u_id})
     </insert>

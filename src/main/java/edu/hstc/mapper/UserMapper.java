@@ -13,7 +13,15 @@ public interface UserMapper {
     public User selectUserByCP(Map map);
 
     //查询所有用户
-    public List<User> selectAllUser();
+    public List<User> selectAllUser(Map map);
 
     public User selectUserById(Integer u_id);
+
+    public Integer insertUser(User user);
+
+    public Integer updateUser(User user);
+
+    public Integer updateUserPassword(User user);
+
+    public Integer deleteUser(Integer u_id);
 }

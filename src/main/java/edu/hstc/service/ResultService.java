@@ -19,6 +19,11 @@ public class ResultService {
         return resultMapper.selectResultByUidAndPid(result);
     }
 
+    public Integer getResultCount(Integer o_id){
+        List<Result> resultList = resultMapper.selectResultByOid(o_id);
+        return resultList.size();
+    }
+
     public Integer addResult(String result,Float r_score,Integer p_id,Integer sj_id,Integer u_id){
         Result result1 = new Result();
         result1.setResult(result);

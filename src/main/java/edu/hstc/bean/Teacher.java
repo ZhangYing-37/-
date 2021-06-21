@@ -13,6 +13,8 @@ public class Teacher {
 
     @NotEmpty(message = "教师密码不能为空")
     private String t_password;
+    private String t_sex;
+    private String t_phone;
 
     private Integer t_userRole;
     private String t_picPath;
@@ -51,6 +53,22 @@ public class Teacher {
         this.t_password = t_password;
     }
 
+    public String getT_sex() {
+        return t_sex;
+    }
+
+    public void setT_sex(String t_sex) {
+        this.t_sex = t_sex;
+    }
+
+    public String getT_phone() {
+        return t_phone;
+    }
+
+    public void setT_phone(String t_phone) {
+        this.t_phone = t_phone;
+    }
+
     public Integer getT_userRole() {
         return t_userRole;
     }
@@ -82,6 +100,8 @@ public class Teacher {
                 ", t_code='" + t_code + '\'' +
                 ", t_userName='" + t_userName + '\'' +
                 ", t_password='" + t_password + '\'' +
+                ", t_sex='" + t_sex + '\'' +
+                ", t_phone='" + t_phone + '\'' +
                 ", t_userRole=" + t_userRole +
                 ", t_picPath='" + t_picPath + '\'' +
                 ", role=" + role +

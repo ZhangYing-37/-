@@ -25,6 +25,14 @@
     text-shadow: 2px 2px #000;
 }
 
+.loginHeader2{
+    text-align: center;
+    font-size: 22px;
+    padding-bottom: 40px;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+}
+
 .loginCont {
     width: 388px;
     height: 304px;
@@ -55,9 +63,9 @@ input {
 .loginForm {
     background: url("../img/formBg.png") 0 0 no-repeat;
     width: 320px;
-    height: 140px;
+    height: auto;
     border-radius: 8px;
-    padding: 90px 38px 48px 30px;
+    padding: 5px 38px 45px 30px;
     /*border: 1px solid green;*/
 }
 
@@ -67,7 +75,7 @@ input {
 }
 
 .inputbox {
-    height: 60px;
+    height: 50px;
 }
 
 .inputbox input {

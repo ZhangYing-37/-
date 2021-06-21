@@ -25,8 +25,8 @@
                     ${sessionScope.loginTeacher.t_userName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">密码修改</a></dd>
+                    <dd><a style="cursor: pointer;" onclick="toTeacherMessage()">基本资料</a></dd>
+                    <dd><a style="cursor: pointer;" onclick="toTeacherPassword()">密码修改</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="/exitLogin">退出</a></li>
@@ -41,33 +41,38 @@
                     <a class="" href="javascript:;">考试管理</a>
                     <dl class="layui-nav-child">
                         <c:forEach var="course" items="${sessionScope.courseList}">
-                            <dd><a href="/toPaperList?co_id=${course.co_id}">${course.c_name}</a></dd>
+                            <dd><a href="/toPaperList?co_id=${course.co_id}">${course.co_name}</a></dd>
                         </c:forEach>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">班级管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
+<%--                <li class="layui-nav-item">--%>
+<%--                    <a href="javascript:;">班级管理</a>--%>
+<%--                    <dl class="layui-nav-child">--%>
+<%--                        <dd><a href="javascript:;">列表一</a></dd>--%>
+<%--                        <dd><a href="javascript:;">列表二</a></dd>--%>
+<%--                        <dd><a href="">超链接</a></dd>--%>
+<%--                    </dl>--%>
+<%--                </li>--%>
             </ul>
         </div>
     </div>
 
     <div class="layui-body" style="background-color: lightgray">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
+        <div style="padding: 15px;">
+            <span style="font-size: 30px; margin-left: 30%;">
+                ${sessionScope.loginTeacher.t_userName}，欢迎使用在线考试系统
+            </span>
+        </div>
     </div>
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © 在线考试系统
     </div>
 </div>
 <script src="/exam/layui/layui.js"></script>
+<script src="/exam/js/public.js"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function(){

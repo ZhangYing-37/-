@@ -7,6 +7,7 @@ import edu.hstc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,8 +39,12 @@ public class GuideController {
 
 
     @RequestMapping("/checkLogin")
-    public String checkLogin(String userCode, String password, Integer role, Model model, HttpSession session){
+    @ResponseBody
+    public String checkLogin(@RequestBody Map map, HttpSession session){
         Integer userId;
+        String userCode = (String) map.get("userCode");
+        String password = (String) map.get("password");
+        Integer role = Integer.parseInt((String) map.get("role"));
         User user = new User();
         if (role==3){
             user = userService.checkLogin(userCode,password,role,session);
@@ -56,21 +61,44 @@ public class GuideController {
         }
 
         if (userId!=null&&role==1){
-            return "adminMain";
+            return "ok";
         }
         else if(userId!=null&&role==2) {
             List<Course> courseList = courseService.getCourse(userId);
             session.setAttribute("courseList",courseList);
-            return "teacherMain";
+            return "ok";
         }else if (userId!=null&&role==3){
             List<Course> courseList = courseService.getCourseByClass(user.getC_id());
             session.setAttribute("courseList",courseList);
-            return "userMain";
+            return "ok";
         }
         else {
-            model.addAttribute("tips","用户编号或者密码错误");
+            return "error";
+        }
+    }
+
+    @RequestMapping("/loginGo")
+    public String loginGo(Integer role){
+        System.out.println("role="+role);
+        if (role==1){
+            return "adminMain";
+        }else if (role==2){
+            return "teacherMain";
+        }else if (role==3){
+            return "userMain";
+        }else {
             return "login";
         }
+    }
+
+    @RequestMapping("/toUserPassword")
+    public String toUserPassword(){
+        return "userPassword";
+    }
+
+    @RequestMapping("/toTeacherPassword")
+    public String toTeacherPassword(){
+        return "teacherPassword";
     }
 
     @RequestMapping("/toPaperList")
@@ -148,6 +176,21 @@ public class GuideController {
     @RequestMapping("/toClassesList")
     public String toClassesList(){
         return "adminClassList";
+    }
+
+    @RequestMapping("/toTeacherList")
+    public String toTeacherList(){
+        return "adminTeacherList";
+    }
+
+    @RequestMapping("/toUserList")
+    public String toUserList(){
+        return "adminUserList";
+    }
+
+    @RequestMapping("/toCourseList")
+    public String toCourseList(){
+        return "adminCourseList";
     }
 
     @RequestMapping("/correctPaper")

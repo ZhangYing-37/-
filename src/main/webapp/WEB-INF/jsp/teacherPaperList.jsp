@@ -25,8 +25,8 @@
                     ${sessionScope.loginTeacher.t_userName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">密码修改</a></dd>
+                    <dd><a style="cursor: pointer;" onclick="toTeacherMessage()">基本资料</a></dd>
+                    <dd><a style="cursor: pointer;" onclick="toTeacherPassword()">密码修改</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="/exitLogin">退出</a></li>
@@ -42,16 +42,16 @@
                     <dl class="layui-nav-child">
                         <c:forEach var="course" items="${sessionScope.courseList}">
                             <c:if test="${course.co_id eq thisCourse.co_id}">
-                                <dd class="layui-this"><a href="/toPaperList?co_id=${course.co_id}">${course.c_name}</a></dd>
+                                <dd class="layui-this"><a href="/toPaperList?co_id=${course.co_id}">${course.co_name}</a></dd>
                             </c:if>
                             <c:if test="${course.co_id ne thisCourse.co_id}">
-                                <dd><a href="/toPaperList?co_id=${course.co_id}">${course.c_name}</a></dd>
+                                <dd><a href="/toPaperList?co_id=${course.co_id}">${course.co_name}</a></dd>
                             </c:if>
                         </c:forEach>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">班级管理</a></li>
-                <li class="layui-nav-item"><a href="">用户管理</a></li>
+<%--                <li class="layui-nav-item"><a href="">班级管理</a></li>--%>
+<%--                <li class="layui-nav-item"><a href="">用户管理</a></li>--%>
             </ul>
         </div>
     </div>
@@ -60,7 +60,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <div>
-                <span class="layui-col-md4" style="font-size: 24px; margin-left: 7%;">${thisCourse.c_name}试卷列表</span>
+                <span class="layui-col-md4" style="font-size: 24px; margin-left: 7%;">${thisCourse.co_name}试卷列表</span>
                 <span class="layui-col-md2">
                     <button type="button" class="layui-btn layui-btn-normal" onclick="createPaper(${thisCourse.co_id})"><i class="layui-icon layui-icon-add-circle"></i>创建试卷</button>
                 </span>
@@ -124,11 +124,12 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © 在线考试系统
     </div>
 </div>
 <script src="/exam/layui/layui.js"></script>
 <script src="/exam/js/jquery.js"></script>
+<script src="/exam/js/public.js"></script>
 <script>
     layui.use('element', function(){
         var element = layui.element;

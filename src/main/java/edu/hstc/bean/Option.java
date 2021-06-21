@@ -11,6 +11,7 @@ public class Option {
 
     private Integer o_isTrue;
     private String o_picPath;
+    private Integer o_count;
     private Integer sj_id;
 
     public Integer getO_id() {
@@ -45,6 +46,14 @@ public class Option {
         this.o_picPath = o_picPath;
     }
 
+    public Integer getO_count() {
+        return o_count;
+    }
+
+    public void setO_count(Integer o_count) {
+        this.o_count = o_count;
+    }
+
     public Integer getSj_id() {
         return sj_id;
     }
@@ -60,6 +69,7 @@ public class Option {
                 ", o_name='" + o_name + '\'' +
                 ", o_isTrue=" + o_isTrue +
                 ", o_picPath='" + o_picPath + '\'' +
+                ", o_count=" + o_count +
                 ", sj_id=" + sj_id +
                 '}';
     }

@@ -9,6 +9,8 @@
         <result property="t_code" column="t_code"/>
         <result property="t_userName" column="t_userName"/>
         <result property="t_password" column="t_password"/>
+        <result property="t_sex" column="t_sex"/>
+        <result property="t_phone" column="t_phone"/>
         <result property="t_userRole" column="t_userRole"/>
         <result property="t_picPath" column="t_picPath"/>
 
@@ -25,8 +27,30 @@
         t_code=#{userCode} and t_password=#{password} and t.t_userRole=#{userRole} and t.t_userRole = r.r_id
     </select>
 
-    <select id="selectAllTeacher" resultMap="teacherMap">
-        select * from exam_teacher t,exam_role r where t.t_userRole = r.r_id
+    <select id="selectAllTeacher" resultType="edu.hstc.bean.Teacher" parameterType="map">
+        select * from exam_teacher where t_userRole=2 limit #{page},#{limit}
     </select>
+
+    <select id="selectTeacherById" parameterType="Integer" resultType="edu.hstc.bean.Teacher">
+        select * from exam_teacher where t_id=#{t_id}
+    </select>
+    
+    <insert id="insertTeacher" parameterType="edu.hstc.bean.Teacher">
+        insert into exam_teacher (t_code,t_userName,t_password,t_sex,t_phone,t_userRole)
+        values (#{t_code},#{t_userName},#{t_password},#{t_sex},#{t_phone},2);
+    </insert>
+
+    <update id="updateTeacher" parameterType="edu.hstc.bean.Teacher">
+        update exam_teacher set t_code=#{t_code},t_userName=#{t_userName},t_password=#{t_password},t_sex=#{t_sex},t_phone=#{t_phone}
+        where t_id=#{t_id} ;
+    </update>
+
+    <update id="updateTeacherPassword" parameterType="edu.hstc.bean.Teacher">
+        update exam_teacher set t_password=#{t_password} where t_id=#{t_id};
+    </update>
+
+    <delete id="deleteTeacher" parameterType="Integer">
+        delete from exam_teacher where t_id=#{t_id}
+    </delete>
 
 </mapper>

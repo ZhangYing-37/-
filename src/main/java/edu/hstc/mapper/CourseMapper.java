@@ -17,5 +17,10 @@ public interface CourseMapper {
     //通过co_id查询课程
     public Course selectCourseByCoid(Integer co_id);
 
+    public Integer insertCourse(Course course);
+
+    public Integer updateCourse(Course course);
+
+    public Integer deleteCourse(Integer co_id);
 
 }

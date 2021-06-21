@@ -19,10 +19,11 @@ public class OptionService {
         return optionMapper.insertOption(option);
     }
 
-    public Integer updateOption(String o_name,Integer isTrue,Integer o_id){
+    public Integer updateOption(String o_name,Integer isTrue,Integer o_count,Integer o_id){
         Option option = new Option();
         option.setO_name(o_name);
         option.setO_isTrue(isTrue);
+        option.setO_count(o_count);
         option.setO_id(o_id);
         return optionMapper.updateOption(option);
     }

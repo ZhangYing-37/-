@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="edu.hstc.mapper.ClassesMapper">
+    <select id="selectAllUserClasses" resultType="edu.hstc.bean.Classes">
+        select * from exam_classes
+    </select>
+
     <select id="selectAllClasses" parameterType="map" resultType="edu.hstc.bean.Classes">
         select * from exam_classes limit #{page},#{limit};
     </select>

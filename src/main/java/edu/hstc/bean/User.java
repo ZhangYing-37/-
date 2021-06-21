@@ -23,7 +23,7 @@ public class User {
     @NotEmpty(message = "用户真实姓名不能为空")
     private String u_realName;
 
-    private Integer u_sex;
+    private String u_sex;
 
     @Email(message = "邮箱格式不正确")
     private String u_email;
@@ -32,6 +32,8 @@ public class User {
     private String u_phone;
 
     private Integer c_id;
+
+    private String userClass;
     private String u_picPath;
 
     private UserRole role;
@@ -85,11 +87,11 @@ public class User {
         this.u_realName = u_realName;
     }
 
-    public Integer getU_sex() {
+    public String getU_sex() {
         return u_sex;
     }
 
-    public void setU_sex(Integer u_sex) {
+    public void setU_sex(String u_sex) {
         this.u_sex = u_sex;
     }
 
@@ -115,6 +117,14 @@ public class User {
 
     public void setC_id(Integer c_id) {
         this.c_id = c_id;
+    }
+
+    public String getUserClass() {
+        return userClass;
+    }
+
+    public void setUserClass(String userClass) {
+        this.userClass = userClass;
     }
 
     public String getU_picPath() {

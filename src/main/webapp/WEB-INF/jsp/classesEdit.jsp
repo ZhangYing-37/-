@@ -18,20 +18,20 @@
     <form class="layui-form layui-form-pane" method="post">
         <input type="hidden" name="c_id" value="${thisClasses.c_id}">
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: auto;">年级：</label>
+            <label class="layui-form-label">年级：</label>
             <div class="layui-input-inline">
                 <input type="number" name="c_grade" value="${thisClasses.c_grade}" style="width: 100px;"  required lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: auto;">班级号：</label>
+            <label class="layui-form-label">班级号：</label>
             <div class="layui-input-inline">
                 <input type="text" name="c_code" value="${thisClasses.c_code}" required lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: auto;">班级名称：</label>
+            <label class="layui-form-label">班级名称：</label>
             <div class="layui-input-inline">
                 <input type="text" name="c_name" value="${thisClasses.c_name}" required lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>

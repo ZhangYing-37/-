@@ -11,6 +11,8 @@ public interface ClassesMapper {
 
     public List<Classes> selectAllClasses(Map map);
 
+    public List<Classes> selectAllUserClasses();
+
     public Classes selectClassesById(Integer c_id);
 
     public Integer insertClasses(Classes classes);

@@ -1,5 +1,6 @@
 package edu.hstc.bean;
 
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class Classes {

@@ -38,12 +38,30 @@
         u_code=#{userCode} and u_password=#{password} and u.u_userRole=#{userRole} and u.u_userRole = r.r_id and c.c_id=u.c_id
     </select>
 
-    <select id="selectAllUser" resultMap="userMap">
-        select * from exam_user u,exam_role r where u.u_userRole = r.r_id and c.c_id=u.c_id
+    <select id="selectAllUser" resultMap="userMap" parameterType="map">
+        select * from exam_user u,exam_classes c where u.c_id=c.c_id limit #{page},#{limit}
     </select>
 
-    <select id="selectUserById" resultType="edu.hstc.bean.User" parameterType="Integer">
-        select * from exam_user where u_id=#{u_id}
+    <select id="selectUserById" resultMap="userMap" parameterType="Integer">
+        select * from exam_user u,exam_classes c where u.c_id=c.c_id and u.u_id=#{u_id}
     </select>
+    
+    <insert id="insertUser" parameterType="edu.hstc.bean.User">
+        insert into exam_user (u_code,u_userName,u_password,u_realName,u_sex,u_email,u_phone,c_id,u_userRole)
+        values (#{u_code},#{u_userName},#{u_password},#{u_realName},#{u_sex},#{u_email},#{u_phone},#{c_id},3);
+    </insert>
+
+    <update id="updateUser" parameterType="edu.hstc.bean.User">
+        update exam_user set u_code=#{u_code},u_userName=#{u_userName},u_password=#{u_password},u_realName=#{u_realName},
+        u_sex=#{u_sex},u_email=#{u_email},u_phone=#{u_phone},c_id=#{c_id} where u_id=#{u_id} ;
+    </update>
+
+    <update id="updateUserPassword" parameterType="edu.hstc.bean.User">
+        update exam_user set u_password=#{u_password} where u_id=#{u_id};
+    </update>
+
+    <delete id="deleteUser" parameterType="Integer">
+        delete from exam_user where u_id=#{u_id}
+    </delete>
 
 </mapper>

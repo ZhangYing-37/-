@@ -22,6 +22,10 @@ public class ClassesService {
         return classesMapper.selectAllClasses(map);
     }
 
+    public List<Classes> selectAllUserClasses(){
+        return classesMapper.selectAllUserClasses();
+    }
+
     public Classes getClassesById(Integer c_id){
         return classesMapper.selectClassesById(c_id);
     }

@@ -9,7 +9,7 @@
     </insert>
 
     <update id="updateOption" parameterType="edu.hstc.bean.Option">
-        update exam_option set o_name=#{o_name},o_isTrue=#{o_isTrue} where o_id=#{o_id};
+        update exam_option set o_name=#{o_name},o_isTrue=#{o_isTrue},o_count=#{o_count} where o_id=#{o_id};
     </update>
 
     <delete id="deleteOption" parameterType="edu.hstc.bean.Option">

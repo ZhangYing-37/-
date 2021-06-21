@@ -63,23 +63,31 @@
                 <c:forEach var="subject" items="${sessionScope.thisPaper.subjectList}" varStatus="status">
                     <div class="layui-col-md10 paperSO" id="paperS${subject.s_code}">
                         <div class="layui-card" id="subject${subject.s_code}">
-                            <div class="layui-card-header">
+                            <div class="layui-card-header" style="height: auto">
                                 <c:if test="${subject.s_type eq 1}">
                                     <span class="layui-badge">单选</span>
+                                    <span class="s_code">${subject.s_code}、</span><span>${subject.s_name}（分值:${subject.s_score}分）</span>
                                 </c:if>
                                 <c:if test="${subject.s_type eq 2}">
                                     <span class="layui-badge layui-bg-orange">多选</span>
+                                    <span class="s_code">${subject.s_code}、</span><span>${subject.s_name}（分值:${subject.s_score}分）</span>
                                 </c:if>
                                 <c:if test="${subject.s_type eq 3}">
                                     <span class="layui-badge layui-bg-green">判断</span>
+                                    <span class="s_code">${subject.s_code}、</span><span>${subject.s_name}（分值:${subject.s_score}分）</span>
                                 </c:if>
                                 <c:if test="${subject.s_type eq 4}">
                                     <span class="layui-badge layui-bg-blue">填空</span>
+                                    <span class="s_code">${subject.s_code}、</span><span>${subject.s_name}（分值:${subject.s_score}分）</span>
                                 </c:if>
                                 <c:if test="${subject.s_type eq 5}">
-                                    <span class="layui-badge layui-bg-cyan">简答</span>
+                                    <div style="height: auto">
+                                        <span class="layui-badge layui-bg-cyan">简答</span>
+                                        <span class="s_code">${subject.s_code}、</span><span>${subject.s_name}（分值:${subject.s_score}分）</span>
+                                    </div>
                                 </c:if>
-                                <span class="s_code">${subject.s_code}、</span><span>${subject.s_name}（分值:${subject.s_score}分）</span>
+
+
                             </div>
                             <div class="layui-card-body">
                                 <c:if test="${subject.s_type eq 1}">
@@ -127,7 +135,7 @@
                                     </div>
                                 </c:if>
                                 <c:if test="${subject.s_type eq 5}">
-                                    <span style="margin-left: 5%;">正确答案：无（由教师批改）</span>
+                                    <div><span style="margin-left: 5%;">正确答案：无（由教师批改）</span></div>
                                 </c:if>
 
                             </div>

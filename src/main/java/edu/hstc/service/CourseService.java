@@ -24,4 +24,24 @@ public class CourseService {
     public Course getCourseByCoid(Integer co_id){
         return courseMapper.selectCourseByCoid(co_id);
     }
+
+    public Integer addCourse(String co_name,String c_desc){
+        Course course = new Course();
+        course.setCo_name(co_name);
+        course.setC_desc(c_desc);
+        courseMapper.insertCourse(course);
+        return course.getCo_id();
+    }
+
+    public Integer updateCourse(String co_name,String c_desc,Integer co_id){
+        Course course = new Course();
+        course.setCo_name(co_name);
+        course.setC_desc(c_desc);
+        course.setCo_id(co_id);
+        return courseMapper.updateCourse(course);
+    }
+
+    public Integer deleteCourse(Integer co_id){
+        return courseMapper.deleteCourse(co_id);
+    }
 }

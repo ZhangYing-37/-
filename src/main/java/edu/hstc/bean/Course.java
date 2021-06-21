@@ -3,7 +3,7 @@ package edu.hstc.bean;
 public class Course {
 
     Integer co_id;
-    String c_name;
+    String co_name;
     String c_desc;
 
 
@@ -15,12 +15,12 @@ public class Course {
         this.co_id = co_id;
     }
 
-    public String getC_name() {
-        return c_name;
+    public String getCo_name() {
+        return co_name;
     }
 
-    public void setC_name(String c_name) {
-        this.c_name = c_name;
+    public void setCo_name(String c_name) {
+        this.co_name = c_name;
     }
 
     public String getC_desc() {
@@ -35,7 +35,7 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "co_id=" + co_id +
-                ", c_name='" + c_name + '\'' +
+                ", co_name='" + co_name + '\'' +
                 ", c_desc='" + c_desc + '\'' +
                 '}';
     }

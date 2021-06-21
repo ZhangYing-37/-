@@ -38,6 +38,7 @@
                 <result property="o_name" column="o_name"/>
                 <result property="o_isTrue" column="o_isTrue"/>
                 <result property="o_picPath" column="o_picPath"/>
+                <result property="o_count" column="o_count"/>
                 <result property="sj_id" column="sj_id"/>
             </collection>
         </collection>

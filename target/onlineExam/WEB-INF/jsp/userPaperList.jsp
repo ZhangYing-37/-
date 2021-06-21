@@ -25,8 +25,8 @@
                     ${sessionScope.loginUser.u_userName}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">密码修改</a></dd>
+                    <dd><a style="cursor: pointer" onclick="toUserMessage()">基本资料</a></dd>
+                    <dd><a style="cursor: pointer" onclick="toUserPassword()">密码修改</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="/exitLogin">退出</a></li>
@@ -42,20 +42,12 @@
                     <dl class="layui-nav-child">
                         <c:forEach var="course" items="${sessionScope.courseList}">
                             <c:if test="${course.co_id eq thisCourse.co_id}">
-                                <dd class="layui-this"><a href="/toPaperListUser?co_id=${course.co_id}">${course.c_name}</a></dd>
+                                <dd class="layui-this"><a href="/toPaperListUser?co_id=${course.co_id}">${course.co_name}</a></dd>
                             </c:if>
                             <c:if test="${course.co_id ne thisCourse.co_id}">
-                                <dd><a href="/toPaperListUser?co_id=${course.co_id}">${course.c_name}</a></dd>
+                                <dd><a href="/toPaperListUser?co_id=${course.co_id}">${course.co_name}</a></dd>
                             </c:if>
                         </c:forEach>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">班级管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -66,7 +58,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <div>
-                <span class="layui-col-md6" style="font-size: 24px; margin-left: 7%;">${thisCourse.c_name}试卷列表</span>
+                <span class="layui-col-md6" style="font-size: 24px; margin-left: 7%;">${thisCourse.co_name}试卷列表</span>
                 <span class="layui-col-md2 layui-input-inline" style="margin-left: 8%;"><input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input" style="float: right;"></span>
                 <span class="layui-col-md1"><button type="button" class="layui-btn"><i class="layui-icon layui-icon-search"></i>搜索</button></span>
             </div>
@@ -91,15 +83,21 @@
                                     <c:if test="${paper.resultList.get(0).re_id eq null}">
                                         <span style="float: right; color: red; font-size: 13px;">未答卷</span>
                                     </c:if>
-                                    <span style="margin-right: 10%; float: right;">考试时间：${paper.startTime}---${paper.endTime}</span>
+                                    <span style="margin-right: 5%; float: right;">考试开始时间：${paper.startTime} 考试结束时间：${paper.endTime}</span>
                                 </div>
                                 <div class="layui-card-body">
                                     <span>试卷说明：${paper.p_desc}</span>
                                 </div>
                                 <div class="layui-card-body">
                                     <div class="layui-btn-container">
-                                        <button type="button" onclick="toWritePaper(${paper.p_id})" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i>答题</button>
-                                        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" ><i class="layui-icon layui-icon-list"></i>成绩</button>
+                                        <c:if test="${paper.resultList.get(0).re_id ne null}">
+                                            <button type="button" class="layui-btn layui-btn-disabled layui-btn-sm"><i class="layui-icon layui-icon-edit"></i>答题</button>
+                                            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" ><i class="layui-icon layui-icon-list"></i>成绩</button>
+                                        </c:if>
+                                        <c:if test="${paper.resultList.get(0).re_id eq null}">
+                                            <button type="button" onclick="toWritePaper(${paper.p_id},'${paper.startTime}','${paper.endTime}')" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i>答题</button>
+                                            <button type="button" class="layui-btn layui-btn-disabled layui-btn-sm" ><i class="layui-icon layui-icon-list"></i>成绩</button>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -113,20 +111,34 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © 在线考试系统
     </div>
 </div>
 <script src="/exam/layui/layui.js"></script>
 <script src="/exam/js/jquery.js"></script>
+<script src="/exam/js/public.js"></script>
 <script>
     layui.use('element', function(){
         var element = layui.element;
 
     });
-    function toWritePaper(p_id) {
-        window.location.href = "/toWritePaper?p_id="+p_id;
-
+    function toWritePaper(p_id,startTime,endTime) {
+        var nowtime = new Date();
+        var starttime = new Date(startTime.replace(/-/g, "\/"));
+        var endtime = new Date(endTime.replace(/-/g, "\/"));;
+        if (starttime<nowtime&endtime>nowtime){
+            console.log("在答题时间内");
+            window.location.href = "/toWritePaper?p_id="+p_id;
+        }else {
+            console.log("不在答题时间内");
+            layui.use('form', function(){
+                var form = layui.form;
+                layui.layer.msg('不在答题时间内!');
+            });
+        }
     }
+
+
 </script>
 </body>
 </html>
